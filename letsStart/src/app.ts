@@ -9,6 +9,6 @@ app.get("/", (req: express.Request, res: express.Response) => {
 });
 
 app.listen(port, () => {
-  //서버를 연다
+  //서버를 연다고
   console.log(`Example app listening at http://localhost:${port}`);
 });
