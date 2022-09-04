@@ -1,5 +1,5 @@
 import * as express from "express";
-import { Cat, CatType } from "./app.model";
+import catsRouter from "./cats/cats.route";
 const app: express.Express = express();
 
 const data = [1, 2, 3, 4];
@@ -14,64 +14,7 @@ app.use((req, res, next) => {
 //* json middleware
 app.use(express.json()); //json 데이터 형식을 쓰게 해주는 미들웨어
 
-//* Read 고양이 전체 데이터 다 조회
-app.get("/cats", (req, res) => {
-  try {
-    const cats = Cat;
-    //throw new Error("db connect error"); //일부러 400 에러내기
-    res.status(200).send({
-      success: true,
-      data: {
-        cats,
-      },
-    });
-  } catch (error) {
-    res.status(400).send({
-      success: false,
-      error: "error",
-    });
-  }
-});
-//* Read 특정 고양이 데이터 조회
-app.get("/cat/:id", (req, res) => {
-  // :을 붙이면 파라메타가 된다.
-  try {
-    const params = req.params;
-    console.log(params);
-    const cat = Cat.find((cat) => {
-      return cat.id === params.id;
-    });
-    res.status(200).send({
-      success: true,
-      data: {
-        cat,
-      },
-    });
-  } catch (error) {
-    res.status(400).send({
-      success: false,
-      error: "error",
-    });
-  }
-});
-
-//* CREATE 새로운 고양이 추가
-app.post("/cats", (req, res) => {
-  try {
-    const data = req.body;
-    Cat.push(data); //Create 한다는 가정
-    console.log(data);
-    res.status(200).send({
-      success: true,
-      data: { data },
-    });
-  } catch (error) {
-    res.status(400).send({
-      success: false,
-      error: "error",
-    });
-  }
-});
+app.use(catsRouter);
 
 // * 404 middleware
 app.use((req, res, next) => {
