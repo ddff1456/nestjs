@@ -1,18 +1,14 @@
 import * as express from "express";
+import { Cat, CatType } from "./app.model";
 const app: express.Express = express();
-const port: number = 8000;
+
+const data = [1, 2, 3, 4];
 
 app.get("/", (req: express.Request, res: express.Response) => {
-  //경로가 없으면 헬로월드를 출력하라
   console.log(req);
-  res.send({ hello: "world!" });
+  res.send({ cats: Cat });
 });
 
-app.post("/test", (req, res) => {
-  res.send({ person: "Lee" });
-});
-
-app.listen(port, () => {
-  //서버를 연다고
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(8000, () => {
+  console.log("server is on...");
 });
